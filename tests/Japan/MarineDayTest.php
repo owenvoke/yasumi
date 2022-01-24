@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\tests\Japan;
@@ -19,12 +19,12 @@ use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing Marine Day in Japan.
  */
-class MarineDayTest extends JapanBaseTestCase implements YasumiTestCaseInterface
+class MarineDayTest extends JapanBaseTestCase implements HolidayTestCase
 {
     /**
      * The name of the holiday.
@@ -54,23 +54,6 @@ class MarineDayTest extends JapanBaseTestCase implements YasumiTestCaseInterface
     }
 
     /**
-     * Tests Marine Day in 2020. Marine Day in 2020 is July 23th for the Olympic Games.
-     *
-     * @throws Exception
-     * @throws ReflectionException
-     */
-    public function testMarineDayIn2020(): void
-    {
-        $year = 2020;
-        $this->assertHoliday(
-            self::REGION,
-            self::HOLIDAY,
-            $year,
-            new DateTime("$year-7-23", new DateTimeZone(self::TIMEZONE))
-        );
-    }
-
-    /**
      * Tests Marine Day after 2003. Marine Day was established since 1996 on July 20th. After 2003 it was changed
      * to be the third monday of July.
      *
@@ -80,6 +63,11 @@ class MarineDayTest extends JapanBaseTestCase implements YasumiTestCaseInterface
     public function testMarineDayOnAfter2003(): void
     {
         $year = $this->generateRandomYear(2004);
+
+        if (2021 === $year) {
+            $this->testMarineDayIn2021();
+        }
+
         $this->assertHoliday(
             self::REGION,
             self::HOLIDAY,

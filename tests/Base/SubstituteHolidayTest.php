@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\tests\Base;
@@ -85,8 +85,8 @@ class SubstituteHolidayTest extends TestCase
     {
         $holiday = new Holiday('testHoliday', [], new DateTime('2019-01-01'), 'en_US');
         $substitute = new SubstituteHoliday($holiday, [], new DateTime('2019-01-02'), 'en_US');
-        $json = \json_encode($substitute, JSON_THROW_ON_ERROR);
-        $instance = \json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $json = json_encode($substitute, JSON_THROW_ON_ERROR);
+        $instance = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         self::assertIsArray($instance);
         self::assertNotNull($instance);

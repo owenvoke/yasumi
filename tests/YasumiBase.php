@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\tests;
@@ -86,7 +86,7 @@ trait YasumiBase
 
         // Loop through all known holidays and assert they are defined by the provider class
         foreach ($expectedHolidays as $holiday) {
-            self::assertArrayHasKey($holiday, \iterator_to_array($holidays));
+            self::assertArrayHasKey($holiday, iterator_to_array($holidays));
         }
     }
 
@@ -228,9 +228,9 @@ trait YasumiBase
         if (\is_array($translations) && !empty($translations)) {
             foreach ($translations as $locale => $name) {
                 $locales = [$locale];
-                $parts = \explode('_', $locale);
-                while (\array_pop($parts) && $parts) {
-                    $locales[] = \implode('_', $parts);
+                $parts = explode('_', $locale);
+                while (array_pop($parts) && $parts) {
+                    $locales[] = implode('_', $parts);
                 }
 
                 $translation = null;
@@ -301,6 +301,22 @@ trait YasumiBase
         self::assertInstanceOf(Holiday::class, $holiday);
         self::assertTrue($holidays->isHoliday($holiday));
         self::assertEquals($expectedDayOfWeek, $holiday->format('l'));
+    }
+
+    /**
+     * Asserts that the holiday provider has the number of expected sources defined.
+     *
+     * @param string $provider            the holiday provider (i.e. country/state) for which the holiday need to be
+     *                                    tested
+     * @param int    $expectedSourceCount the expected number of sources
+     *
+     * @throws ReflectionException
+     */
+    public function assertSources(string $provider, int $expectedSourceCount): void
+    {
+        $holidayProvider = Yasumi::create($provider, $this->generateRandomYear());
+
+        self::assertCount($expectedSourceCount, $holidayProvider->getSources());
     }
 
     /**
@@ -517,7 +533,7 @@ trait YasumiBase
 
         for ($i = 1; $i <= $iterations; ++$i) {
             $year = $this->generateRandomYear($range);
-            $date = new DateTime("{$year}-{$month}-{$day}", new DateTimeZone($timezone ?? 'UTC'));
+            $date = new DateTime("$year-$month-$day", new DateTimeZone($timezone ?? 'UTC'));
 
             $callback($year, $date);
 
@@ -539,7 +555,7 @@ trait YasumiBase
         int $lowerLimit = null,
         int $upperLimit = null
     ): int {
-        return (int) self::numberBetween($lowerLimit ?? 1000, $upperLimit ?? 9999);
+        return self::numberBetween($lowerLimit ?? 1000, $upperLimit ?? 9999);
     }
 
     /**
@@ -570,7 +586,7 @@ trait YasumiBase
         $min = $int1 < $int2 ? $int1 : $int2;
         $max = $int1 < $int2 ? $int2 : $int1;
 
-        return \random_int($min, $max);
+        return random_int($min, $max);
     }
 
     /**
@@ -588,14 +604,14 @@ trait YasumiBase
      */
     public static function dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null): DateTime
     {
-        $startTimestamp = $startDate instanceof \DateTime ? $startDate->getTimestamp() : \strtotime($startDate);
+        $startTimestamp = $startDate instanceof \DateTime ? $startDate->getTimestamp() : strtotime($startDate);
         $endTimestamp = static::getMaxTimestamp($endDate);
 
         if ($startTimestamp > $endTimestamp) {
             throw new \InvalidArgumentException('Start date must be anterior to end date.');
         }
 
-        $timestamp = \random_int($startTimestamp, $endTimestamp);
+        $timestamp = random_int($startTimestamp, $endTimestamp);
 
         return static::setTimezone(
             new \DateTime('@'.$timestamp),
@@ -627,10 +643,10 @@ trait YasumiBase
      * @see http://www.gmarts.org/index.php?go=415#EasterMallen
      * @see http://www.tondering.dk/claus/cal/easter.php
      */
-    protected function calculateEaster(int $year, string $timezone): DateTime
+    protected function calculateEaster(int $year, string $timezone): DateTimeInterface
     {
         if (\extension_loaded('calendar')) {
-            $easter_days = \easter_days($year);
+            $easter_days = easter_days($year);
         } else {
             $golden = (($year % 19) + 1); // The Golden Number
 
@@ -689,7 +705,7 @@ trait YasumiBase
      */
     protected static function getMaxTimestamp($max = 'now')
     {
-        if (\is_numeric($max)) {
+        if (is_numeric($max)) {
             return (int) $max;
         }
 
@@ -697,7 +713,7 @@ trait YasumiBase
             return $max->getTimestamp();
         }
 
-        return \strtotime(empty($max) ? 'now' : $max);
+        return strtotime(empty($max) ? 'now' : $max);
     }
 
     /**
@@ -710,6 +726,6 @@ trait YasumiBase
 
     private static function resolveTimezone(?string $timezone): ?string
     {
-        return (null === $timezone) ? ((null === static::$defaultTimezone) ? \date_default_timezone_get() : static::$defaultTimezone) : $timezone;
+        return $timezone ?? (static::$defaultTimezone ?? date_default_timezone_get());
     }
 }

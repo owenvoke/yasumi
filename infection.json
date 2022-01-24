@@ -4,14 +4,12 @@
         "src\/Yasumi"
     ]
   },
+  "timeout": 20,
   "logs": {
     "text": "var/infection.log",
     "summary": "var/summary.log",
     "debug": "var/debug.log",
-    "perMutator": "var/per-mutator.md",
-    "badge": {
-      "branch": "master"
-    }
+    "perMutator": "var/per-mutator.md"
   },
   "mutators": {
     "@default": true

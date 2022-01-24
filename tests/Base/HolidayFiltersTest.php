@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\tests\Base;
@@ -44,7 +44,7 @@ class HolidayFiltersTest extends TestCase
         $holidays = Yasumi::create('Ireland', 2018);
 
         $filteredHolidays = new OfficialHolidaysFilter($holidays->getIterator());
-        $filteredHolidaysArray = \iterator_to_array($filteredHolidays);
+        $filteredHolidaysArray = iterator_to_array($filteredHolidays);
 
         // Assert array definitions
         self::assertArrayHasKey('newYearsDay', $filteredHolidaysArray);
@@ -79,7 +79,7 @@ class HolidayFiltersTest extends TestCase
         $holidays = Yasumi::create('Ireland', 2018);
 
         $filteredHolidays = new ObservedHolidaysFilter($holidays->getIterator());
-        $filteredHolidaysArray = \iterator_to_array($filteredHolidays);
+        $filteredHolidaysArray = iterator_to_array($filteredHolidays);
 
         // Assert array definitions
         self::assertArrayNotHasKey('newYearsDay', $filteredHolidaysArray);
@@ -114,7 +114,7 @@ class HolidayFiltersTest extends TestCase
         $holidays = Yasumi::create('Ireland', 2018);
 
         $filteredHolidays = new BankHolidaysFilter($holidays->getIterator());
-        $filteredHolidaysArray = \iterator_to_array($filteredHolidays);
+        $filteredHolidaysArray = iterator_to_array($filteredHolidays);
 
         // Assert array definitions
         self::assertArrayNotHasKey('newYearsDay', $filteredHolidaysArray);
@@ -148,7 +148,7 @@ class HolidayFiltersTest extends TestCase
         $holidays = Yasumi::create('Netherlands', 2017);
 
         $filteredHolidays = new SeasonalHolidaysFilter($holidays->getIterator());
-        $filteredHolidaysArray = \iterator_to_array($filteredHolidays);
+        $filteredHolidaysArray = iterator_to_array($filteredHolidays);
 
         // Assert array definitions
         self::assertArrayHasKey('summerTime', $filteredHolidaysArray);
@@ -197,7 +197,7 @@ class HolidayFiltersTest extends TestCase
         $holidays = Yasumi::create('Netherlands', 2017);
 
         $filteredHolidays = new OtherHolidaysFilter($holidays->getIterator());
-        $filteredHolidaysArray = \iterator_to_array($filteredHolidays);
+        $filteredHolidaysArray = iterator_to_array($filteredHolidays);
 
         // Assert array definitions
         self::assertArrayHasKey('internationalWorkersDay', $filteredHolidaysArray);

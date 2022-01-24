@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\Provider;
@@ -30,7 +30,7 @@ class USA extends AbstractProvider
     use ChristianHolidays;
 
     /**
-     * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
+     * Code to identify this Holiday Provider. Typically, this is the ISO3166 code corresponding to the respective
      * country or sub-region.
      */
     public const ID = 'US';
@@ -57,6 +57,7 @@ class USA extends AbstractProvider
         $this->calculateMartinLutherKingday();
         $this->calculateWashingtonsBirthday();
         $this->calculateMemorialDay();
+        $this->calculateJuneteenth();
         $this->calculateIndependenceDay();
         $this->calculateLabourDay();
         $this->calculateColumbusDay();
@@ -64,6 +65,13 @@ class USA extends AbstractProvider
         $this->calculateThanksgivingDay();
 
         $this->calculateSubstituteHolidays();
+    }
+
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_the_United_States',
+        ];
     }
 
     /**
@@ -135,6 +143,27 @@ class USA extends AbstractProvider
             $this->addHoliday(new Holiday('memorialDay', [
                 'en' => 'Memorial Day',
             ], $date, $this->locale));
+        }
+    }
+
+    /**
+     * Juneteenth National Independence Day.
+     *
+     * Juneteenth National Independence Day, commonly known simply as Juneteenth, is a federal holiday in the United
+     * States commemorating the end of slavery. Established as a federal holiday on June 17, 2021, Juneteenth is
+     * celebrated annually on June 19. In case Juneteenth falls on a Sunday, a substituted holiday is observed
+     * the following Monday. If it falls on a Saturday, a substituted holiday is observed the previous Friday.
+     *
+     * @see https://en.wikipedia.org/wiki/Juneteenth
+     *
+     * @throws \Exception
+     */
+    private function calculateJuneteenth(): void
+    {
+        if ($this->year >= 2021) {
+            $this->addHoliday(new Holiday('juneteenth', [
+                'en' => 'Juneteenth',
+            ], new DateTime("$this->year-6-19", DateTimeZoneFactory::getDateTimeZone($this->timezone)), $this->locale));
         }
     }
 

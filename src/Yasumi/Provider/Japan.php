@@ -5,12 +5,12 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2021 AzuyaLabs
+ * Copyright (c) 2015 - 2022 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Sacha Telgenhof <me@sachatelgenhof.com>
+ * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
 namespace Yasumi\Provider;
@@ -31,7 +31,7 @@ class Japan extends AbstractProvider
     use CommonHolidays;
 
     /**
-     * Code to identify this Holiday Provider. Typically this is the ISO3166 code corresponding to the respective
+     * Code to identify this Holiday Provider. Typically, this is the ISO3166 code corresponding to the respective
      * country or sub-region.
      */
     public const ID = 'JP';
@@ -108,6 +108,14 @@ class Japan extends AbstractProvider
         $this->calculateCoronationDay();
         $this->calculateEnthronementProclamationCeremony();
         $this->calculateBridgeHolidays();
+    }
+
+    public function getSources(): array
+    {
+        return [
+            'https://en.wikipedia.org/wiki/Public_holidays_in_Japan',
+            'https://ja.wikipedia.org/wiki/%E5%9B%BD%E6%B0%91%E3%81%AE%E7%A5%9D%E6%97%A5',
+        ];
     }
 
     /**
@@ -271,18 +279,18 @@ class Japan extends AbstractProvider
     {
         $day = null;
         if ($this->year >= 1948 && $this->year <= 1979) {
-            $day = \floor(self::VERNAL_EQUINOX_PARAM_1979 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1983) / 4));
+            $day = floor(self::VERNAL_EQUINOX_PARAM_1979 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1983) / 4));
         } elseif ($this->year <= 2099) {
-            $day = \floor(self::VERNAL_EQUINOX_PARAM_2099 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1980) / 4));
+            $day = floor(self::VERNAL_EQUINOX_PARAM_2099 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1980) / 4));
         } elseif ($this->year <= 2150) {
-            $day = \floor(self::VERNAL_EQUINOX_PARAM_2150 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1980) / 4));
+            $day = floor(self::VERNAL_EQUINOX_PARAM_2150 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1980) / 4));
         }
 
         if ($this->year < 1948 || $this->year > 2150) {
             $day = null;
         }
 
-        if (\is_numeric($day)) {
+        if (is_numeric($day)) {
             $this->addHoliday(new Holiday(
                 'vernalEquinoxDay',
                 ['en' => 'Vernal Equinox Day', 'ja' => '春分の日'],
@@ -370,11 +378,8 @@ class Japan extends AbstractProvider
     {
         $date = null;
         if (2021 === $this->year) {
-            // For Olympic 2021 Tokyo (after COVID-19)
+            // For Olympic 2021 Tokyo (rescheduled due to the COVID-19 pandemic)
             $date = new DateTime("$this->year-7-22", DateTimeZoneFactory::getDateTimeZone($this->timezone));
-        } elseif (2020 === $this->year) {
-            // For Olympic 2020 Tokyo
-            $date = new DateTime("$this->year-7-23", DateTimeZoneFactory::getDateTimeZone($this->timezone));
         } elseif ($this->year >= 2003) {
             $date = new DateTime("third monday of july $this->year", DateTimeZoneFactory::getDateTimeZone($this->timezone));
         } elseif ($this->year >= 1996) {
@@ -516,18 +521,18 @@ class Japan extends AbstractProvider
     {
         $day = null;
         if ($this->year >= 1948 && $this->year <= 1979) {
-            $day = \floor(self::AUTUMNAL_EQUINOX_PARAM_1979 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1983) / 4));
+            $day = floor(self::AUTUMNAL_EQUINOX_PARAM_1979 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1983) / 4));
         } elseif ($this->year <= 2099) {
-            $day = \floor(self::AUTUMNAL_EQUINOX_PARAM_2099 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1980) / 4));
+            $day = floor(self::AUTUMNAL_EQUINOX_PARAM_2099 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1980) / 4));
         } elseif ($this->year <= 2150) {
-            $day = \floor(self::AUTUMNAL_EQUINOX_PARAM_2150 + self::EQUINOX_GRADIENT * ($this->year - 1980) - \floor(($this->year - 1980) / 4));
+            $day = floor(self::AUTUMNAL_EQUINOX_PARAM_2150 + self::EQUINOX_GRADIENT * ($this->year - 1980) - floor(($this->year - 1980) / 4));
         }
 
         if ($this->year < 1948 || $this->year > 2150) {
             $day = null;
         }
 
-        if (\is_numeric($day)) {
+        if (is_numeric($day)) {
             $this->addHoliday(new Holiday(
                 'autumnalEquinoxDay',
                 ['en' => 'Autumnal Equinox Day', 'ja' => '秋分の日'],
@@ -563,7 +568,6 @@ class Japan extends AbstractProvider
                     // Find next week day (not being another holiday)
                     while (\in_array($date, $dates, false)) {
                         $date->add(new DateInterval('P1D'));
-                        continue;
                     }
                 } elseif ($holiday >= '1973-04-12') {
                     $date->add(new DateInterval('P1D'));
