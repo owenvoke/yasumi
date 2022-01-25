@@ -19,9 +19,6 @@ use DirectoryIterator;
 use InvalidArgumentException;
 use Yasumi\Exception\UnknownLocaleException;
 
-/**
- * Class Translations.
- */
 class Translations implements TranslationsInterface
 {
     /**
@@ -35,8 +32,6 @@ class Translations implements TranslationsInterface
     private array $availableLocales;
 
     /**
-     * Constructor.
-     *
      * @param array<string> $availableLocales list of all defined locales
      */
     public function __construct(array $availableLocales)
@@ -45,7 +40,7 @@ class Translations implements TranslationsInterface
     }
 
     /**
-     * Loads translations from directory.
+     * Loads translations from a given directory.
      *
      * @param string $directoryPath directory path for translation files
      *
@@ -106,7 +101,7 @@ class Translations implements TranslationsInterface
     }
 
     /**
-     * Returns translation for holiday in specific locale.
+     * Returns a translation for the given holiday in a specific locale.
      *
      * @param string $key    holiday key
      * @param string $locale locale
@@ -124,7 +119,7 @@ class Translations implements TranslationsInterface
     }
 
     /**
-     * Returns all available translations for holiday.
+     * Returns all available translations for a given holiday.
      *
      * @param string $key holiday key
      *
