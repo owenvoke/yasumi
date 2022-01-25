@@ -22,44 +22,27 @@ use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\MissingTranslationException;
 use Yasumi\Exception\UnknownLocaleException;
 
-/**
- * Class Holiday.
- */
 class Holiday extends DateTime implements JsonSerializable
 {
-    /**
-     * Type definition for Official (i.e. National/Federal) holidays.
-     */
+    /** Type definition for Official (i.e. National/Federal) holidays.  */
     public const TYPE_OFFICIAL = 'official';
 
-    /**
-     * Type definition for Observance holidays.
-     */
+    /** Type definition for Observance holidays. */
     public const TYPE_OBSERVANCE = 'observance';
 
-    /**
-     * Type definition for seasonal holidays.
-     */
+    /** Type definition for seasonal holidays. */
     public const TYPE_SEASON = 'season';
 
-    /**
-     * Type definition for Bank holidays.
-     */
+    /** Type definition for Bank holidays. */
     public const TYPE_BANK = 'bank';
 
-    /**
-     * Type definition for other type of holidays.
-     */
+    /**  Type definition for other type of holidays. */
     public const TYPE_OTHER = 'other';
 
-    /**
-     * The default locale. Used for translations of holiday names and other text strings.
-     */
+    /** The default locale. Used for translations of holiday names and other text strings. */
     public const DEFAULT_LOCALE = 'en_US';
 
-    /**
-     * Pseudo-locale representing the holiday key.
-     */
+    /** Pseudo-locale representing the holiday key. */
     public const LOCALE_KEY = '_key';
 
     /**
@@ -68,9 +51,7 @@ class Holiday extends DateTime implements JsonSerializable
      */
     public string $shortName;
 
-    /**
-     * @var array<string, string> list of translations of this holiday
-     */
+    /** @var array<string, string> list of translations of this holiday */
     public array $translations;
 
     /** identifies the type of holiday */
@@ -79,9 +60,7 @@ class Holiday extends DateTime implements JsonSerializable
     /** locale (i.e. language) in which the holiday information needs to be displayed in. (Default 'en_US') */
     protected string $displayLocale;
 
-    /**
-     * @var array<string> list of all defined locales
-     */
+    /** @var array<string> list of all defined locales */
     private static array $locales = [];
 
     /**
