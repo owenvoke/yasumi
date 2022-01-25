@@ -17,12 +17,12 @@ namespace Yasumi\tests\Netherlands;
 use Exception;
 use Yasumi\Holiday;
 use Yasumi\Provider\Netherlands\Kingsday;
-use Yasumi\tests\YasumiTestCaseInterface;
+use Yasumi\tests\HolidayTestCase;
 
 /**
  * Class for testing Kings Day in the Netherlands.
  */
-class KingsDayNewTest extends NetherlandsBaseTestCase implements YasumiTestCaseInterface
+class KingsDayNewTest extends NetherlandsBaseTestCase implements HolidayTestCase
 {
     /**
      * Tests Kings Day on or after 2014. King's Day is celebrated from 2014 onwards on April 27th.
@@ -42,12 +42,12 @@ class KingsDayNewTest extends NetherlandsBaseTestCase implements YasumiTestCaseI
         echo \json_encode($day, JSON_THROW_ON_ERROR);
     }
 
-    public function testTranslation()
+    public function testTranslation(): void
     {
         // TODO: Implement testTranslation() method.
     }
 
-    public function testHolidayType()
+    public function testHolidayType(): void
     {
         $this->assertHolidayType(
             self::REGION,
