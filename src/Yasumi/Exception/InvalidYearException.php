@@ -18,8 +18,6 @@ namespace Yasumi\Exception;
 use InvalidArgumentException;
 
 /**
- * Class InvalidYearException.
- *
  * @author Quentin Neyrat <quentin.neyrat@gmail.com>
  */
 class InvalidYearException extends InvalidArgumentException implements Exception

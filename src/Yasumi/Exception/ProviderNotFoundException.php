@@ -17,8 +17,6 @@ namespace Yasumi\Exception;
 use InvalidArgumentException;
 
 /**
- * Class ProviderNotFoundException.
- *
  * @author Quentin Neyrat <quentin.neyrat@gmail.com>
  */
 class ProviderNotFoundException extends InvalidArgumentException implements Exception

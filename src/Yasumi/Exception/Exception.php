@@ -14,9 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Exception;
 
-/**
- * Interface Exception.
- */
 interface Exception
 {
 }

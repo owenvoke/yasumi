@@ -16,15 +16,10 @@ namespace Yasumi\Exception;
 
 use InvalidArgumentException;
 
-/**
- * Class InvalidDateException.
- */
 class InvalidDateException extends InvalidArgumentException implements Exception
 {
     /**
-     * Initializes the Exception instance.
-     *
-     * @param mixed $argumentValue The value of the invalid argument
+     * @param mixed $argumentValue the value of the invalid argument
      */
     public function __construct($argumentValue)
     {
