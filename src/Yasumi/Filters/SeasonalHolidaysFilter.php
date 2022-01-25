@@ -17,8 +17,6 @@ namespace Yasumi\Filters;
 use Yasumi\Holiday;
 
 /**
- * SeasonalHolidaysFilter is a class for filtering all seasonal holidays.
- *
  * OfficialHolidaysFilter is a class that returns all holidays that are considered seasonal of any given holiday
  * provider.
  *

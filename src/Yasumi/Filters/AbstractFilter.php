@@ -19,17 +19,12 @@ use Countable;
 use FilterIterator;
 use Yasumi\SubstituteHoliday;
 
-/**
- * AbstractFilter.
- */
 abstract class AbstractFilter extends FilterIterator implements Countable
 {
     /**
-     * Returns the number of holidays returned by this iterator.
+     * Returns the number of unique holidays returned by this iterator.
      *
      * In case a holiday is substituted (e.g. observed), the holiday is only counted once.
-     *
-     * @return int number of unique holidays
      */
     public function count(): int
     {

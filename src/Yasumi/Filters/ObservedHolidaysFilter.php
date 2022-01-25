@@ -17,8 +17,6 @@ namespace Yasumi\Filters;
 use Yasumi\Holiday;
 
 /**
- * ObservedHolidaysFilter is a class for filtering all observed holidays.
- *
  * ObservedHolidaysFilter is a class that returns all holidays that are considered observed of any given holiday
  * provider.
  *

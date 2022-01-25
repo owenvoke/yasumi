@@ -28,22 +28,20 @@ use Yasumi\Provider\AbstractProvider;
  */
 class BetweenFilter extends AbstractFilter
 {
-    /** start date of the time frame to check against. */
+    /** start date of the date time span to check against. */
     private string $startDate;
 
-    /** end date of the time frame to check against */
+    /** end date of the date time span to check against */
     private string $endDate;
 
-    /**indicates whether the start and end dates should be included in the comparison */
+    /** indicates whether the start and end dates should be included in the comparison */
     private bool $equal;
 
     /**
-     * Construct the Between FilterIterator Object.
-     *
-     * @param Iterator<AbstractProvider> $iterator  Iterator object of the Holidays Provider
-     * @param \DateTimeInterface         $startDate Start date of the time frame to check against
-     * @param \DateTimeInterface         $endDate   End date of the time frame to check against
-     * @param bool                       $equal     Indicate whether the start and end dates should be included in the
+     * @param Iterator<AbstractProvider> $iterator  iterator object of the Holidays Provider
+     * @param \DateTimeInterface         $startDate start date of the date time span to check against
+     * @param \DateTimeInterface         $endDate   end date of the date time span to check against
+     * @param bool                       $equal     indicates whether the start and end dates should be included in the
      *                                              comparison
      */
     public function __construct(

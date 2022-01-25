@@ -17,8 +17,6 @@ namespace Yasumi\Filters;
 use Yasumi\Holiday;
 
 /**
- * OfficialHolidaysFilter is a class for filtering all official holidays.
- *
  * OfficialHolidaysFilter is a class that returns all holidays that are considered official of any given
  * holiday provider.
  *

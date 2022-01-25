@@ -17,8 +17,6 @@ namespace Yasumi\Filters;
 use Yasumi\Holiday;
 
 /**
- * OtherHolidaysFilter is a class for filtering all other type of holidays.
- *
  * OtherHolidaysFilter is a class that returns all holidays that are considered another type of holiday of any given
  * holiday provider.
  *

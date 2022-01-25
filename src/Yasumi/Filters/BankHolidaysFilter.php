@@ -17,8 +17,6 @@ namespace Yasumi\Filters;
 use Yasumi\Holiday;
 
 /**
- * BankHolidaysFilter is a class for filtering all bank holidays.
- *
  * BankHolidaysFilter is a class that returns all holidays that are considered bank holidays of any given holiday
  * provider.
  *
