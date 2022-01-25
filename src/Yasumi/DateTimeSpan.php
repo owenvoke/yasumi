@@ -58,13 +58,11 @@ class DateTimeSpan
     {
         $lower = self::YEAR_LOWER_BOUND.'-01-01';
         try {
-            $lowerDate = new \DateTimeImmutable($lower);
-
-            if ($this->start < $lowerDate) {
+            if ($this->start < (new \DateTimeImmutable($lower))) {
                 throw new InvalidDateTimeSpanException(sprintf('start date needs to be %s or later (%s given)', $lower, $this->start->format(self::FORMAT)));
             }
         } catch (\Throwable $e) {
-            throw new \RuntimeException($e->getMessage());
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
 
         if ($this->start > $this->end) {
