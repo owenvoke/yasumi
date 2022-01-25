@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
-namespace Yasumi;
+namespace Yasumi\Translation;
 
 use DirectoryIterator;
 use InvalidArgumentException;
@@ -21,19 +21,13 @@ use Yasumi\Exception\UnknownLocaleException;
 
 class Translations implements TranslationsInterface
 {
-    /**
-     * @var array<string,array> translations array: ['<holiday key>' => ['<locale>' => 'translation', ...], ... ]
-     */
+    /** @var array<string,array> translations array: ['<holiday key>' => ['<locale>' => 'translation', ...], ... ] */
     public array $translations = [];
 
-    /**
-     * @var array<string> list of all defined locales
-     */
+    /** @var array<string> list of all defined locales */
     private array $availableLocales;
 
-    /**
-     * @param array<string> $availableLocales list of all defined locales
-     */
+    /** @param array<string> $availableLocales list of all defined locales */
     public function __construct(array $availableLocales)
     {
         $this->availableLocales = $availableLocales;
@@ -81,7 +75,7 @@ class Translations implements TranslationsInterface
     }
 
     /**
-     * Adds translation for holiday in specific locale.
+     * Adds a translation for the given holiday in a specific locale.
      *
      * @param string $key         holiday key
      * @param string $locale      locale
@@ -100,14 +94,7 @@ class Translations implements TranslationsInterface
         $this->translations[$key][$locale] = $translation;
     }
 
-    /**
-     * Returns a translation for the given holiday in a specific locale.
-     *
-     * @param string $key    holiday key
-     * @param string $locale locale
-     *
-     * @return string|null translated holiday name
-     */
+    /** {@inheritdoc} */
     public function getTranslation(string $key, string $locale): ?string
     {
         if (!\array_key_exists($key, $this->translations)
@@ -118,13 +105,7 @@ class Translations implements TranslationsInterface
         return $this->translations[$key][$locale];
     }
 
-    /**
-     * Returns all available translations for a given holiday.
-     *
-     * @param string $key holiday key
-     *
-     * @return array<string, string> holiday name translations ['<locale>' => '<translation>', ...]
-     */
+    /** {@inheritdoc} */
     public function getTranslations(string $key): array
     {
         if (!\array_key_exists($key, $this->translations)) {

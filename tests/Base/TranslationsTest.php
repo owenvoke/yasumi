@@ -18,7 +18,7 @@ use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Yasumi\Exception\UnknownLocaleException;
-use Yasumi\Translations;
+use Yasumi\Translation\Translations;
 
 /**
  * Class TranslationsTest.

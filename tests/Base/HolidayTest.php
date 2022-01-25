@@ -23,7 +23,7 @@ use Yasumi\Exception\MissingTranslationException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Holiday;
 use Yasumi\tests\YasumiBase;
-use Yasumi\TranslationsInterface;
+use Yasumi\Translation\TranslationsInterface;
 
 /**
  * Class HolidayTest.

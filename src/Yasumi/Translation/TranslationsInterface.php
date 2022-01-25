@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
-namespace Yasumi;
+namespace Yasumi\Translation;
 
 /**
  * Interface TranslationsInterface.
@@ -20,7 +20,7 @@ namespace Yasumi;
 interface TranslationsInterface
 {
     /**
-     * Returns translation for holiday in specific locale.
+     * Returns a translation for the given holiday in a specific locale.
      *
      * @param string $key    holiday key
      * @param string $locale locale
@@ -30,7 +30,7 @@ interface TranslationsInterface
     public function getTranslation(string $key, string $locale): ?string;
 
     /**
-     * Returns all available translations for holiday.
+     * Returns all available translations for a given holiday.
      *
      * @param string $key holiday key
      *

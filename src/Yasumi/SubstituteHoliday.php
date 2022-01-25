@@ -18,6 +18,7 @@ namespace Yasumi;
 use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\MissingTranslationException;
 use Yasumi\Exception\UnknownLocaleException;
+use Yasumi\Translation\TranslationsInterface;
 
 /**
  * Class SubstituteHoliday.

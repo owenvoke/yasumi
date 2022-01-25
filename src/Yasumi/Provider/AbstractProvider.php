@@ -26,7 +26,7 @@ use Yasumi\Holiday;
 use Yasumi\HolidayInterface;
 use Yasumi\ProviderInterface;
 use Yasumi\SubstituteHoliday;
-use Yasumi\TranslationsInterface;
+use Yasumi\Translation\TranslationsInterface;
 use Yasumi\Yasumi;
 
 /**
