@@ -11,15 +11,24 @@ to [Semantic Versioning](https://semver.org).
 
 ### Changed
 
-- Moved Spring Bank Holiday to 2nd June and added Platinum Jubilee bank holiday on 3rd June for 2022 (UK) [\#270](https://github.com/azuyalabs/yasumi/issues/270)
+- Included the unit tests directory for checking by PHPStan.
 
 ### Fixed
+
+- The test for Remembrance Day (Argentina) in that Remembrance Day was considered for all years: it is only celebrated
+  since 2006.
+- Created the interface methods of the `ProviderInterface` that the abstract provider class implements. Since the return
+  type of the Yasumi factory methods is now `ProviderInterface`, those missing methods generated errors especially by
+  statistic analyzers.
+- Included the data type for test methods that return an array.
 
 ### Deprecated
 
 ### Removed
 
-## [2.5.0] - 2022-01-??
+- Superfluous notes/comments.
+
+## [2.5.0] - 2022-01-30
 
 ### Added
 
@@ -32,6 +41,7 @@ to [Semantic Versioning](https://semver.org).
   USA [\#253](https://github.com/azuyalabs/yasumi/pull/253) ([Mark Heintz](https://github.com/mheintz)).
 - The Korea Tourism Organization's holiday guide link was added to the source of South Korea
   Provider. [\#255](https://github.com/azuyalabs/yasumi/pull/255) ([barami](https://github.com/barami)).
+- Mothering Day for the United Kingdom [\#266](https://github.com/azuyalabs/yasumi/issues/266).
 
 - All holiday providers now include a method that returns a list of external sources (i.e. references to websites,
   books, scientific papers, etc.) that are used for determining the calculation logic of the providers' holidays.
@@ -45,6 +55,8 @@ to [Semantic Versioning](https://semver.org).
   . [\#255](https://github.com/azuyalabs/yasumi/pull/255) ([barami](https://github.com/barami))
 - Refactored the tests of South Korea provider to testing substitution
   holidays. [\#255](https://github.com/azuyalabs/yasumi/pull/255) ([barami](https://github.com/barami)).
+- Moved the United Kingdom Spring Bank Holiday to June 2nd and added Platinum Jubilee bank holiday on June 3rd
+  for [\#270](https://github.com/azuyalabs/yasumi/issues/270) ([Dan](https://github.com/dch-dev)).
 
 - Provider tests must implement the `ProviderTestCase` interface to ensure all required test methods are defined.
 - `YasumiTestCaseInterface` was renamed to `HolidayTestCase` to better match the newly added `ProviderTestCase`

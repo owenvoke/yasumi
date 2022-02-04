@@ -13,44 +13,23 @@ declare(strict_types=1);
  * @author Sacha Telgenhof <me at sachatelgenhof dot com>
  */
 
-namespace Yasumi\tests\Latvia;
+namespace Yasumi\tests\UnitedKingdom;
 
+use DateInterval;
 use DateTime;
 use DateTimeZone;
 use Exception;
 use ReflectionException;
 use Yasumi\Holiday;
 use Yasumi\tests\HolidayTestCase;
+use Yasumi\tests\UnitedKingdom\England\EnglandBaseTestCase;
 
-/**
- * Class containing tests for Easter day in Latvia.
- *
- * @author Gedas Lukošius <gedas@lukosius.me>
- */
-class EasterDayTest extends LatviaBaseTestCase implements HolidayTestCase
+class MotheringSundayTest extends EnglandBaseTestCase implements HolidayTestCase
 {
-    /**
-     * The name of the holiday to be tested.
-     */
-    public const HOLIDAY = 'easter';
+    public const HOLIDAY = 'motheringSunday';
 
     /**
-     * @return array<array> list of test dates for the holiday defined in this test
-     *
-     * @throws Exception
-     */
-    public function holidayDataProvider(): array
-    {
-        return $this->generateRandomEasterDates(self::TIMEZONE);
-    }
-
-    /**
-     * Test defined holiday in the test.
-     *
-     * @dataProvider holidayDataProvider
-     *
-     * @param int    $year     the year for which the holiday defined in this test needs to be tested
-     * @param string $expected the expected date
+     * @dataProvider HolidayDataProvider
      *
      * @throws ReflectionException
      * @throws Exception
@@ -66,8 +45,30 @@ class EasterDayTest extends LatviaBaseTestCase implements HolidayTestCase
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<array> list of test dates for the holiday defined in this test
      *
+     * @throws Exception
+     */
+    public function HolidayDataProvider(): array
+    {
+        $data = [];
+
+        for ($y = 0; $y < 50; ++$y) {
+            $year = $this->generateRandomYear();
+            $date = $this->calculateEaster($year, self::TIMEZONE);
+            $date->sub(new DateInterval('P3W'));
+
+            $data[] = [$year, $date->format('Y-m-d')];
+        }
+
+        // some extra random dates
+        $data[] = [2016, '2016-03-06'];
+        $data[] = [2022, '2022-03-27'];
+
+        return $data;
+    }
+
+    /**
      * @throws ReflectionException
      */
     public function testTranslation(): void
@@ -76,17 +77,20 @@ class EasterDayTest extends LatviaBaseTestCase implements HolidayTestCase
             self::REGION,
             self::HOLIDAY,
             $this->generateRandomYear(),
-            [self::LOCALE => 'Lieldienas']
+            [self::LOCALE => 'Mothering Sunday']
         );
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ReflectionException
      */
     public function testHolidayType(): void
     {
-        $this->assertHolidayType(self::REGION, self::HOLIDAY, $this->generateRandomYear(), Holiday::TYPE_OFFICIAL);
+        $this->assertHolidayType(
+            self::REGION,
+            self::HOLIDAY,
+            $this->generateRandomYear(),
+            Holiday::TYPE_OTHER
+        );
     }
 }
