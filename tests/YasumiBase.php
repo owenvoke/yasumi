@@ -21,7 +21,6 @@ use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\AssertionFailedError;
-use ReflectionException;
 use RuntimeException;
 use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
@@ -56,7 +55,6 @@ trait YasumiBase
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws UnknownLocaleException
-     * @throws ReflectionException
      */
     public function assertDefinedHolidays(
         array $expectedHolidays,
@@ -103,7 +101,6 @@ trait YasumiBase
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws AssertionFailedError
-     * @throws ReflectionException
      */
     public function assertHoliday(
         string $provider,
@@ -132,7 +129,6 @@ trait YasumiBase
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws AssertionFailedError
-     * @throws ReflectionException
      */
     public function assertSubstituteHoliday(
         string $provider,
@@ -160,7 +156,6 @@ trait YasumiBase
      * @throws UnknownLocaleException
      * @throws InvalidDateException
      * @throws AssertionFailedError
-     * @throws ReflectionException
      */
     public function assertNotSubstituteHoliday(
         string $provider,
@@ -186,7 +181,6 @@ trait YasumiBase
      * @throws UnknownLocaleException
      * @throws InvalidDateException
      * @throws AssertionFailedError
-     * @throws ReflectionException
      */
     public function assertNotHoliday(
         string $provider,
@@ -211,7 +205,6 @@ trait YasumiBase
      * @throws RuntimeException
      * @throws UnknownLocaleException
      * @throws AssertionFailedError
-     * @throws ReflectionException
      */
     public function assertTranslatedHolidayName(
         string $provider,
@@ -225,7 +218,7 @@ trait YasumiBase
         self::assertInstanceOf(Holiday::class, $holiday);
         self::assertTrue($holidays->isHoliday($holiday));
 
-        if (\is_array($translations) && !empty($translations)) {
+        if (!empty($translations)) {
             foreach ($translations as $locale => $name) {
                 $locales = [$locale];
                 $parts = explode('_', $locale);
@@ -259,7 +252,6 @@ trait YasumiBase
      * @throws RuntimeException
      * @throws AssertionFailedError
      * @throws UnknownLocaleException
-     * @throws ReflectionException
      */
     public function assertHolidayType(
         string $provider,
@@ -287,7 +279,6 @@ trait YasumiBase
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws UnknownLocaleException
-     * @throws ReflectionException
      */
     public function assertDayOfWeek(
         string $provider,
@@ -310,7 +301,7 @@ trait YasumiBase
      *                                    tested
      * @param int    $expectedSourceCount the expected number of sources
      *
-     * @throws ReflectionException
+     * @throws Exception
      */
     public function assertSources(string $provider, int $expectedSourceCount): void
     {
@@ -340,7 +331,7 @@ trait YasumiBase
         int $range = null
     ): array {
         $data = [];
-        $range = $range ?? 1000;
+        $range ??= 1000;
         for ($y = 1; $y <= ($iterations ?? 10); ++$y) {
             $year = (int) self::dateTimeBetween("-$range years", "+$range years")->format('Y');
             $data[] = [$year, new DateTime("$year-$month-$day", new DateTimeZone($timezone ?? 'UTC'))];
@@ -366,7 +357,7 @@ trait YasumiBase
         int $range = null
     ): array {
         $data = [];
-        $range = $range ?? 1000;
+        $range ??= 1000;
 
         for ($i = 1; $i <= ($iterations ?? 10); ++$i) {
             $year = (int) self::dateTimeBetween("-$range years", "+$range years")->format('Y');
@@ -394,7 +385,7 @@ trait YasumiBase
         int $iterations = null,
         int $range = null
     ): array {
-        $range = $range ?? 1000;
+        $range ??= 1000;
 
         return $this->generateRandomModifiedEasterDates(static function (DateTime $date) {
             $date->add(new DateInterval('P1D'));
@@ -420,7 +411,7 @@ trait YasumiBase
         int $range = null
     ): array {
         $data = [];
-        $range = $range ?? 1000;
+        $range ??= 1000;
         for ($i = 1; $i <= ($iterations ?? 10); ++$i) {
             $year = (int) self::dateTimeBetween("-$range years", "+$range years")->format('Y');
             $date = $this->calculateEaster($year, $timezone ?? 'UTC');
@@ -449,7 +440,7 @@ trait YasumiBase
         int $iterations = null,
         int $range = null
     ): array {
-        $range = $range ?? 1000;
+        $range ??= 1000;
 
         return $this->generateRandomModifiedEasterDates(static function (DateTime $date) {
             $date->sub(new DateInterval('P2D'));
@@ -472,7 +463,7 @@ trait YasumiBase
         int $iterations = null,
         int $range = null
     ): array {
-        $range = $range ?? 1000;
+        $range ??= 1000;
 
         return $this->generateRandomModifiedEasterDates(static function (DateTime $date) {
             $date->add(new DateInterval('P49D'));
@@ -550,6 +541,8 @@ trait YasumiBase
      * @param int|null $upperLimit the upper limit for generating a year number (default: 9999)
      *
      * @return int a year number
+     *
+     * @throws Exception
      */
     public function generateRandomYear(
         int $lowerLimit = null,
@@ -576,12 +569,11 @@ trait YasumiBase
     /**
      * Returns a random number between $int1 and $int2 (any order).
      *
-     * @param int $int1 default to 0
-     * @param int $int2 defaults to 32 bit max integer, ie 2147483647
+     * @throws Exception
      *
      * @example 79907610
      */
-    public static function numberBetween($int1 = 0, $int2 = 2147483647): int
+    public static function numberBetween(int $int1 = 0, int $int2 = 2147483647): int
     {
         $min = $int1 < $int2 ? $int1 : $int2;
         $max = $int1 < $int2 ? $int2 : $int1;
@@ -597,15 +589,26 @@ trait YasumiBase
      * @param \DateTime|string $endDate   Defaults to "now"
      * @param string|null      $timezone  time zone in which the date time should be set, default to DateTime::$defaultTimezone, if set, otherwise the result of `date_default_timezone_get`
      *
-     * @example DateTime('1999-02-02 11:42:52')
+     * @throws Exception
      *
      * @see http://php.net/manual/en/timezones.php
      * @see http://php.net/manual/en/function.date-default-timezone-get.php
+     *
+     * @example DateTime('1999-02-02 11:42:52')
      */
     public static function dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null): DateTime
     {
         $startTimestamp = $startDate instanceof \DateTime ? $startDate->getTimestamp() : strtotime($startDate);
+
+        if (!$startTimestamp) {
+            throw new \RuntimeException('unable to get timestamp for the start date');
+        }
+
         $endTimestamp = static::getMaxTimestamp($endDate);
+
+        if (!$endTimestamp) {
+            throw new \RuntimeException('unable to get timestamp for the end date');
+        }
 
         if ($startTimestamp > $endTimestamp) {
             throw new \InvalidArgumentException('Start date must be anterior to end date.');
@@ -706,14 +709,14 @@ trait YasumiBase
     protected static function getMaxTimestamp($max = 'now')
     {
         if (is_numeric($max)) {
-            return (int) $max;
+            $ts = (int) $max;
+        } elseif ($max instanceof \DateTime) {
+            $ts = $max->getTimestamp();
+        } else {
+            $ts = strtotime(empty($max) ? 'now' : $max);
         }
 
-        if ($max instanceof \DateTime) {
-            return $max->getTimestamp();
-        }
-
-        return strtotime(empty($max) ? 'now' : $max);
+        return $ts;
     }
 
     /**
