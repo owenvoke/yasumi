@@ -23,4 +23,6 @@ abstract class HolidayNew extends \DateTimeImmutable implements HolidayInterface
     {
         return $this;
     }
+
+    abstract protected function validate(): void;
 }

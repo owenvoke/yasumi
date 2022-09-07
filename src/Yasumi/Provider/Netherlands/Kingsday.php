@@ -38,4 +38,8 @@ final class Kingsday extends HolidayNew
     {
         return false;
     }
+
+    protected function validate(): void
+    {
+    }
 }
