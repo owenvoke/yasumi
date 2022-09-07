@@ -12,15 +12,15 @@
   ],
   "homepage": "https://www.yasumi.dev",
   "keywords": [
-    "holiday",
-    "holidays",
-    "calendar",
+    "bank",
     "calculation",
+    "calendar",
     "celebration",
     "date",
-    "time",
-    "bank",
-    "national"
+    "holiday",
+    "holidays",
+    "national",
+    "time"
   ],
   "readme": "README.md",
   "support": {
@@ -40,10 +40,12 @@
     "ext-json": "*"
   },
   "require-dev": {
+    "friends-of-phpspec/phpspec-code-coverage": "^6.1",
     "friendsofphp/php-cs-fixer": "v2.19 | v3.11",
     "infection/infection": "^0.17 | ^0.26",
     "mikey179/vfsstream": "^1.6",
     "phan/phan": "^5.2",
+    "phpspec/phpspec": "^7.2",
     "phpstan/phpstan": "^1.4",
     "phpunit/phpunit": "^8.5 | ^9.5",
     "vimeo/psalm": "^4.9"
@@ -62,19 +64,25 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Yasumi\\tests\\": "tests/"
+      "Yasumi\\tests\\": "tests/",
+      "Yasumi\\spec\\": "spec/"
     }
   },
   "scripts": {
     "format": "./vendor/bin/php-cs-fixer fix",
-    "phpstan": "vendor/bin/phpstan analyse",
-    "psalm": "vendor/bin/psalm --threads=2",
-    "phan": "vendor/bin/phan -C",
-    "test": "vendor/bin/phpunit",
     "infection": "vendor/bin/infection run -j 2",
+    "phan": "vendor/bin/phan -C",
+    "phpspec": "vendor/bin/phpspec run --stop-on-failure --ansi",
+    "phpstan": "vendor/bin/phpstan analyse",
+    "phpunit": "vendor/bin/phpunit",
+    "psalm": "vendor/bin/psalm --threads=2",
     "analyse": [
       "@phpstan",
       "@psalm"
+    ],
+    "test": [
+      "@phpspec",
+      "@phpunit"
     ]
   },
   "suggest": {

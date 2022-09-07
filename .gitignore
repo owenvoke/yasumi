@@ -5,5 +5,7 @@
 .phpunit.result.cache
 bin/_*
 composer.lock
+coverage
+phpspec.yml
 var
 vendor

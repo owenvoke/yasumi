@@ -1,0 +1,8 @@
+suites:
+  default:
+    namespace: App
+    psr4_prefix: App
+
+code_generation: false
+stop_on_failure: true
+
