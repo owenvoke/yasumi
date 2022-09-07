@@ -18,6 +18,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use Yasumi\Holiday;
+use Yasumi\Provider\France;
 use Yasumi\tests\HolidayTestCase;
 
 /**
@@ -68,6 +69,18 @@ class PentecostMondayTest extends FranceBaseTestCase implements HolidayTestCase
      */
     public function testHolidayType(): void
     {
-        $this->assertHolidayType(self::REGION, self::HOLIDAY, $this->generateRandomYear(), Holiday::TYPE_OFFICIAL);
+        $this->assertHolidayType(
+            self::REGION,
+            self::HOLIDAY,
+            $this->generateRandomYear(null, France::EST_YEAR_DAY_OF_SOLIDARITY_WITH_ELDERLY - 1),
+            Holiday::TYPE_OFFICIAL
+        );
+
+        $this->assertHolidayType(
+            self::REGION,
+            self::HOLIDAY,
+            $this->generateRandomYear(France::EST_YEAR_DAY_OF_SOLIDARITY_WITH_ELDERLY),
+            Holiday::TYPE_OBSERVANCE
+        );
     }
 }
