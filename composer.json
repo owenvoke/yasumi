@@ -65,7 +65,7 @@
   "autoload-dev": {
     "psr-4": {
       "Yasumi\\tests\\": "tests/",
-      "Yasumi\\spec\\": "spec/"
+      "spec\\": "spec/"
     }
   },
   "scripts": {

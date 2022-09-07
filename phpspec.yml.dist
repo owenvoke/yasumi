@@ -1,7 +1,7 @@
 suites:
   default:
-    namespace: App
-    psr4_prefix: App
+    namespace: ~
+    psr4_prefix: ~
 
 code_generation: false
 stop_on_failure: true
