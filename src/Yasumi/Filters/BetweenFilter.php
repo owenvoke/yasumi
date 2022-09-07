@@ -34,24 +34,21 @@ class BetweenFilter extends AbstractFilter
     /** end date of the date time span to check against */
     private string $endDate;
 
-    /** indicates whether the start and end dates should be included in the comparison */
-    private bool $equal;
-
     /**
      * @param Iterator<ProviderInterface> $iterator  iterator object of the Holidays Provider
-     * @param \DateTimeInterface         $startDate start date of the date time span to check against
-     * @param \DateTimeInterface         $endDate   end date of the date time span to check against
-     * @param bool                       $equal     indicates whether the start and end dates should be included in the
-     *                                              comparison
+     * @param \DateTimeInterface          $startDate start date of the date time span to check against
+     * @param \DateTimeInterface          $endDate   end date of the date time span to check against
+     * @param bool                        $equal     indicates whether the start and end dates should be included in the
+     *                                               comparison
      */
     public function __construct(
         Iterator $iterator,
         \DateTimeInterface $startDate,
         \DateTimeInterface $endDate,
-        bool $equal = true
+        /** indicates whether the start and end dates should be included in the comparison */
+        private bool $equal = true
     ) {
         parent::__construct($iterator);
-        $this->equal = $equal;
         $this->startDate = $startDate->format('Y-m-d');
         $this->endDate = $endDate->format('Y-m-d');
     }

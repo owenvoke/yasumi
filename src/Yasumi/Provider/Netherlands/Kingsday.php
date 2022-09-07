@@ -7,7 +7,7 @@ namespace Yasumi\Provider\Netherlands;
 use Yasumi\HolidayNew;
 use Yasumi\Provider\DateTimeZoneFactory;
 
-class Kingsday extends HolidayNew
+final class Kingsday extends HolidayNew
 {
     public function __construct(int $year, string $timezone)
     {

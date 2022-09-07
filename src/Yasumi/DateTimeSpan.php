@@ -6,21 +6,14 @@ namespace Yasumi;
 
 use Yasumi\Exception\InvalidDateTimeSpanException;
 
-class DateTimeSpan
+class DateTimeSpan implements \Stringable
 {
     public const YEAR_LOWER_BOUND = 1000;
 
     private const FORMAT = 'c';
 
-    private \DateTimeInterface $start;
-
-    private \DateTimeInterface $end;
-
-    public function __construct(\DateTimeInterface $start, \DateTimeInterface $end)
+    public function __construct(private \DateTimeInterface $start, private \DateTimeInterface $end)
     {
-        $this->start = $start;
-        $this->end = $end;
-
         $this->validate();
     }
 
@@ -44,7 +37,7 @@ class DateTimeSpan
     }
 
     /**
-     * @return array<string>
+     * @return array{start: string, end: string}
      */
     public function toArray(): array
     {

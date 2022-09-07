@@ -30,7 +30,7 @@ class OnFilter extends AbstractFilter
 
     /**
      * @param Iterator<ProviderInterface> $iterator iterator object of the Holidays Provider
-     * @param \DateTimeInterface         $date     date to compare against
+     * @param \DateTimeInterface          $date     date to compare against
      */
     public function __construct(
         Iterator $iterator,

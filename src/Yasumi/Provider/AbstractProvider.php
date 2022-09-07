@@ -18,7 +18,6 @@ use ArrayIterator;
 use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Filters\BetweenFilter;
 use Yasumi\Filters\OnFilter;
@@ -89,9 +88,6 @@ abstract class AbstractProvider implements Countable, ProviderInterface, Iterato
      */
     private array $holidays = [];
 
-    /** global translations */
-    private ?TranslationsInterface $globalTranslations;
-
     /**
      * Creates a new holiday provider (i.e. country/state).
      *
@@ -103,13 +99,13 @@ abstract class AbstractProvider implements Countable, ProviderInterface, Iterato
     public function __construct(
         int $year,
         ?string $locale = null,
-        ?TranslationsInterface $globalTranslations = null
+        /** global translations */
+        private ?TranslationsInterface $globalTranslations = null
     ) {
         $this->clearHolidays();
 
         $this->year = $year ?: getdate()['year'];
         $this->locale = $locale ?? 'en_US';
-        $this->globalTranslations = $globalTranslations;
 
         $this->initialize();
     }
@@ -347,7 +343,7 @@ abstract class AbstractProvider implements Countable, ProviderInterface, Iterato
         $this->isHolidayKeyNotEmpty($key); // Validate if key is not empty
 
         // Get calling class name
-        $hReflectionClass = new \ReflectionClass(\get_class($this));
+        $hReflectionClass = new \ReflectionClass($this::class);
 
         return Yasumi::create($hReflectionClass->getShortName(), $year, $this->locale)->getHoliday($key);
     }

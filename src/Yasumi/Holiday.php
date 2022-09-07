@@ -23,7 +23,7 @@ use Yasumi\Exception\MissingTranslationException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Translation\TranslationsInterface;
 
-class Holiday extends DateTime implements JsonSerializable
+class Holiday extends DateTime implements JsonSerializable, \Stringable
 {
     /** Type definition for Official (i.e. National/Federal) holidays.  */
     public const TYPE_OFFICIAL = 'official';
@@ -52,12 +52,6 @@ class Holiday extends DateTime implements JsonSerializable
      */
     public string $shortName;
 
-    /** @var array<string, string> list of translations of this holiday */
-    public array $translations;
-
-    /** identifies the type of holiday */
-    protected string $type;
-
     /** locale (i.e. language) in which the holiday information needs to be displayed in. (Default 'en_US') */
     protected string $displayLocale;
 
@@ -71,8 +65,7 @@ class Holiday extends DateTime implements JsonSerializable
      * (DateTimeInterface) has the correct timezone set. Otherwise, the default system timezone is used.
      *
      * @param string                $key           Holiday key
-     * @param array<string, string> $names         An array containing the name/description of this holiday in various
-     *                                             languages. Overrides global translations
+     * @param array<string, string> $translations  An array containing the name/description of this holiday in various
      * @param \DateTimeInterface    $date          A DateTimeInterface instance representing the date of the holiday
      * @param string                $displayLocale Locale (i.e. language) in which the holiday information needs to be
      *                                             displayed in. (Default 'en_US')
@@ -87,10 +80,11 @@ class Holiday extends DateTime implements JsonSerializable
      */
     public function __construct(
         string $key,
-        array $names,
+        public array $translations,
         \DateTimeInterface $date,
         string $displayLocale = self::DEFAULT_LOCALE,
-        string $type = self::TYPE_OFFICIAL
+        /** identifies the type of holiday */
+        protected string $type = self::TYPE_OFFICIAL
     ) {
         // Validate if key is not empty
         if (empty($key)) {
@@ -109,9 +103,7 @@ class Holiday extends DateTime implements JsonSerializable
 
         // Set additional attributes
         $this->shortName = $key;
-        $this->translations = $names;
         $this->displayLocale = $displayLocale;
-        $this->type = $type;
 
         // Construct instance
         parent::__construct($date->format('Y-m-d'), $date->getTimezone());

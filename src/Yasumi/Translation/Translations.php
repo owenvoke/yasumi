@@ -21,16 +21,14 @@ use Yasumi\Exception\UnknownLocaleException;
 
 class Translations implements TranslationsInterface
 {
-    /* @var array<string, array<string, string>> translations array: ['<holiday key>' => ['<locale>' => 'translation', ...], ... ]
-    public array $translations = [];
-
-    /** @var array<string> list of all defined locales */
-    private array $availableLocales;
+    /**
+     * @var array<string, mixed[]>|mixed|array<string, mixed>
+     */
+    public $translations;
 
     /** @param array<string> $availableLocales list of all defined locales */
-    public function __construct(array $availableLocales)
+    public function __construct(private array $availableLocales)
     {
-        $this->availableLocales = $availableLocales;
     }
 
     /**
