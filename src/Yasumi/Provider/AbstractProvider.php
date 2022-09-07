@@ -75,10 +75,8 @@ abstract class AbstractProvider implements Countable, ProviderInterface, Iterato
         'IN' => [0], // India
     ];
 
-    /**
-     * @var int the object's current year
-     */
-    protected $year;
+    /** @var int the object's current year */
+    protected int $year;
 
     /** the object's current timezone */
     protected string $timezone;

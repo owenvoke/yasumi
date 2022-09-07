@@ -9,6 +9,9 @@ to [Semantic Versioning](https://semver.org).
 
 ### Added
 
+- Added all examples as shown on the documentation site as a convenience to developers who like to have all
+  information in a single place.
+
 ### Changed
 
 - Included the unit tests directory for checking by PHPStan.
@@ -21,6 +24,7 @@ to [Semantic Versioning](https://semver.org).
   type of the Yasumi factory methods is now `ProviderInterface`, those missing methods generated errors especially by
   statistic analyzers.
 - Included the data type for test methods that return an array.
+- Liberation day for the Netherlands is only an official holiday every 5 years [\#280](https://github.com/azuyalabs/yasumi/pull/280)
 
 ### Deprecated
 
