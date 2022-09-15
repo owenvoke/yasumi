@@ -10,6 +10,8 @@ class DateTimeSpan implements \Stringable
 {
     public const YEAR_LOWER_BOUND = 1000;
 
+    public const YEAR_UPPER_BOUND = 9999;
+
     private const FORMAT = 'c';
 
     public function __construct(private \DateTimeInterface $start, private \DateTimeInterface $end)
@@ -50,12 +52,14 @@ class DateTimeSpan implements \Stringable
     private function validate(): void
     {
         $lower = self::YEAR_LOWER_BOUND.'-01-01';
-        try {
-            if ($this->start < (new \DateTimeImmutable($lower))) {
-                throw new InvalidDateTimeSpanException(sprintf('start date needs to be %s or later (%s given)', $lower, $this->start->format(self::FORMAT)));
-            }
-        } catch (\Throwable $e) {
-            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        $upper = self::YEAR_UPPER_BOUND.'-12-31';
+
+        if ($this->start < (new \DateTimeImmutable($lower))) {
+            throw new InvalidDateTimeSpanException(sprintf('start date needs to be %s or later (%s given)', $lower, $this->start->format(self::FORMAT)));
+        }
+
+        if ($this->end > (new \DateTimeImmutable($upper))) {
+            throw new InvalidDateTimeSpanException(sprintf('end date needs to be %s or earlier (%s given)', $upper, $this->start->format(self::FORMAT)));
         }
 
         if ($this->start > $this->end) {
