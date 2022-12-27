@@ -15,9 +15,6 @@ declare(strict_types=1);
 
 namespace Yasumi\tests\Denmark;
 
-use DateTime;
-use DateTimeZone;
-use Exception;
 use Yasumi\Holiday;
 
 /**
@@ -56,33 +53,38 @@ final class SummerTimeTest extends DaylightSavingTime
         // In version 2022f of the tz db, a correction for some years weere made for the summertime
         // transitions. See: https://github.com/eggert/tz/blob/2022f/europe
         if (1 === strcmp(\intltz_get_tz_data_version(), '2022f')) {
+            $this->swapObservation([1917, 1918, 1949]);
+
             $this->deviantTransitions[1916] = '1916-04-30';
+            $this->deviantTransitions[1917] = '1917-04-16';
+            $this->deviantTransitions[1918] = '1918-04-15';
             $this->deviantTransitions[1940] = '1940-04-01';
             $this->deviantTransitions[1946] = '1946-04-14';
             $this->deviantTransitions[1947] = '1947-04-06';
             $this->deviantTransitions[1948] = '1948-04-18';
+            $this->deviantTransitions[1949] = '1949-04-10';
         }
     }
 
     /**
      * Tests the holiday defined in this test.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testSummerTime(): void
     {
         $this->assertNotHoliday(self::REGION, self::HOLIDAY, $this->randomYearFromArray($this->unobservedYears));
 
         $year = $this->randomYearFromArray($this->observedYears);
-        $expectedDate = new DateTime("last sunday of march $year", new DateTimeZone(self::TIMEZONE));
+        $expectedDate = new \DateTime("last sunday of march $year", new \DateTimeZone(self::TIMEZONE));
 
         if (array_key_exists($year, $this->deviantTransitions)) {
-            $expectedDate = new DateTime($this->deviantTransitions[$year], new DateTimeZone(self::TIMEZONE));
+            $expectedDate = new \DateTime($this->deviantTransitions[$year], new \DateTimeZone(self::TIMEZONE));
         }
 
         // Since 1980 Summertime in Denmark starts on the last day of March. In 1980 itself however, it started on April, 6th.
         if (1980 === $year) {
-            $expectedDate = new DateTime('1980-04-06', new DateTimeZone(self::TIMEZONE));
+            $expectedDate = new \DateTime('1980-04-06', new \DateTimeZone(self::TIMEZONE));
         }
 
         $this->assertHoliday(
@@ -96,7 +98,7 @@ final class SummerTimeTest extends DaylightSavingTime
     /**
      * Tests the translated name of the holiday defined in this test.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testTranslation(): void
     {
@@ -111,7 +113,7 @@ final class SummerTimeTest extends DaylightSavingTime
     /**
      * Tests type of the holiday defined in this test.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testHolidayType(): void
     {
