@@ -12,6 +12,9 @@ to [Semantic Versioning](https://semver.org).
 - Added all examples as shown on the documentation site as a convenience to developers who like to have all
   information in a single place.
 - Added bank holiday for Queen Elizabeth II’s State Funeral on 19 September 2022 to United Kingdom
+- Added Public Holiday National Day of Mourning (for Queen Elizabeth II) on 22 September 2022 to Australia
+- In Japan, Marine Day was rescheduled to July 23 as the 2020 Tokyo Olypmics took place. The rescheduled Marine
+  Day for 2021 was included, but not the original rescheduled day for 2020.
 
 ### Changed
 
@@ -30,11 +33,15 @@ to [Semantic Versioning](https://semver.org).
   statistic analysers.
 - Included the data type for test methods that return an array.
 - Liberation day for the Netherlands is only an official holiday every 5 years [\#280](https://github.com/azuyalabs/yasumi/pull/280).
+- Switched from `getShortName()` to `getName()` for the ReflectionClass created by the method `anotherTime()` in the `AbstractProvider`.\
+  Using `getShortName` could result in a `ProviderNotFoundException` for some custom holiday providers, since the namespace is not fully qualified.\
+  This happened, if you would create a custom holiday provider in your own project's namespace implementing the `next()` or `previous()` method from the `AbstractProvider`.
 
 ### Deprecated
 
 ### Removed
 
+- Unused `InvalidDateException` class.
 - Superfluous notes/comments.
 
 ## [2.5.0] - 2022-01-30

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,15 +15,11 @@ declare(strict_types=1);
 
 namespace Yasumi;
 
-use DateTime;
-use InvalidArgumentException;
-use JsonSerializable;
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\MissingTranslationException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Translation\TranslationsInterface;
 
-class Holiday extends DateTime implements JsonSerializable, \Stringable
+class Holiday extends \DateTime implements \JsonSerializable, \Stringable
 {
     /** Type definition for Official (i.e. National/Federal) holidays.  */
     public const TYPE_OFFICIAL = 'official';
@@ -73,9 +69,8 @@ class Holiday extends DateTime implements JsonSerializable, \Stringable
      *                                             TYPE_OBSERVANCE, TYPE_SEASON, TYPE_BANK or TYPE_OTHER. By default, an
      *                                             official holiday is considered.
      *
-     * @throws InvalidDateException
      * @throws UnknownLocaleException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public function __construct(
@@ -88,11 +83,11 @@ class Holiday extends DateTime implements JsonSerializable, \Stringable
     ) {
         // Validate if key is not empty
         if (empty($key)) {
-            throw new InvalidArgumentException('Holiday name can not be blank.');
+            throw new \InvalidArgumentException('Holiday name can not be blank.');
         }
 
         // Load internal locales variable
-        if (empty(self::$locales)) {
+        if ([] === self::$locales) {
             self::$locales = Yasumi::getAvailableLocales();
         }
 

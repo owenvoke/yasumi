@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Provider;
 
-use DateTime;
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Holiday;
 
@@ -38,7 +36,6 @@ class France extends AbstractProvider
     /**
      * Initialize holidays for France.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -91,7 +88,6 @@ class France extends AbstractProvider
      *
      * @see https://en.wikipedia.org/wiki/Bastille_Day
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -102,7 +98,7 @@ class France extends AbstractProvider
             $this->addHoliday(new Holiday('bastilleDay', [
                 'en' => 'Bastille Day',
                 'fr' => 'La Fête nationale',
-            ], new DateTime("$this->year-7-14", DateTimeZoneFactory::getDateTimeZone($this->timezone)), $this->locale));
+            ], new \DateTime("$this->year-7-14", DateTimeZoneFactory::getDateTimeZone($this->timezone)), $this->locale));
         }
     }
 

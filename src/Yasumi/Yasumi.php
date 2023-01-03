@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,13 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi;
 
-use FilesystemIterator;
-use InvalidArgumentException;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionClass;
-use RuntimeException;
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\InvalidYearException;
 use Yasumi\Exception\ProviderNotFoundException;
 use Yasumi\Exception\UnknownLocaleException;
@@ -69,10 +62,9 @@ class Yasumi
      * @param int                $workingDays Number of days to look ahead for the (first) next working day
      *
      * @throws UnknownLocaleException
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      * @throws \Exception
-     * @throws InvalidDateException
      *
      * @TODO we should accept a timezone so we can accept int/string for $startDate
      */
@@ -88,9 +80,6 @@ class Yasumi
 
         while ($workingDays > 0) {
             $date = $date->add(new \DateInterval('P1D'));
-            if (!$date instanceof \DateTimeInterface) {
-                throw new \RuntimeException('unable to perform addition');
-            }
 
             if (!$provider instanceof ProviderInterface) {
                 $provider = self::create($class, (int) $date->format('Y'));
@@ -120,7 +109,7 @@ class Yasumi
      *
      * @return ProviderInterface An instance of class $class is created and returned
      *
-     * @throws RuntimeException          If no such holiday provider is found
+     * @throws \RuntimeException         If no such holiday provider is found
      * @throws InvalidYearException      if the year parameter is not between the defined lower and upper bounds
      * @throws UnknownLocaleException    if the locale parameter is invalid
      * @throws ProviderNotFoundException if the holiday provider for the given country does not exist
@@ -130,7 +119,7 @@ class Yasumi
         // Find and return holiday provider instance
         $providerClass = sprintf('Yasumi\Provider\%s', str_replace('/', '\\', $class));
 
-        if (class_exists($class) && (new ReflectionClass($class))->implementsInterface(ProviderInterface::class)) {
+        if (class_exists($class) && (new \ReflectionClass($class))->implementsInterface(ProviderInterface::class)) {
             $providerClass = $class;
         }
 
@@ -144,7 +133,7 @@ class Yasumi
         }
 
         // Load internal locales variable
-        if (empty(self::$locales)) {
+        if ([] === self::$locales) {
             self::$locales = self::getAvailableLocales();
         }
 
@@ -186,8 +175,8 @@ class Yasumi
      *
      * @return ProviderInterface An instance of class $class is created and returned
      *
-     * @throws RuntimeException          If no such holiday provider is found
-     * @throws InvalidArgumentException  if the year parameter is not between the defined lower and upper bounds
+     * @throws \RuntimeException         If no such holiday provider is found
+     * @throws \InvalidArgumentException if the year parameter is not between the defined lower and upper bounds
      * @throws UnknownLocaleException    if the locale parameter is invalid
      * @throws ProviderNotFoundException if the holiday provider for the given ISO3166-2 code does not exist
      * @throws \ReflectionException
@@ -222,24 +211,31 @@ class Yasumi
         }
 
         $providers = [];
-        $filesIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(
+        $filesIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(
             __DIR__.DIRECTORY_SEPARATOR.'Provider',
-            FilesystemIterator::SKIP_DOTS
-        ), RecursiveIteratorIterator::SELF_FIRST);
+            \FilesystemIterator::SKIP_DOTS
+        ), \RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($filesIterator as $file) {
-            if ($file->isDir() || 'php' !== $file->getExtension() || \in_array(
+            if ($file->isDir()) {
+                continue;
+            }
+
+            if ('php' !== $file->getExtension()) {
+                continue;
+            }
+
+            if (\in_array(
                 $file->getBasename('.php'),
                 self::$ignoredProvider,
                 true
             )) {
                 continue;
             }
-
             $quotedDs = preg_quote(DIRECTORY_SEPARATOR, '');
             $provider = preg_replace("#^.+{$quotedDs}Provider$quotedDs(.+)\\.php$#", '$1', $file->getPathName());
 
-            $class = new ReflectionClass(sprintf('Yasumi\Provider\%s', str_replace('/', '\\', $provider)));
+            $class = new \ReflectionClass(sprintf('Yasumi\Provider\%s', str_replace('/', '\\', $provider)));
 
             $key = 'ID';
             if ($class->isSubclassOf(AbstractProvider::class) && $class->hasConstant($key)) {
@@ -262,10 +258,9 @@ class Yasumi
      * @param int                $workingDays Number of days to look back for the (first) previous working day
      *
      * @throws UnknownLocaleException
-     * @throws RuntimeException
-     * @throws InvalidArgumentException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      * @throws \Exception
-     * @throws InvalidDateException
      *
      * @TODO we should accept a timezone so we can accept int/string for $startDate
      */
@@ -274,15 +269,16 @@ class Yasumi
         \DateTimeInterface $startDate,
         int $workingDays = 1
     ): \DateTimeInterface {
-        // convert to immutable date to prevent modification of the  original
+        // convert to immutable date to prevent modification of the original
         $date = $startDate instanceof \DateTime ? \DateTimeImmutable::createFromMutable($startDate) : $startDate;
 
         $provider = null;
 
         while ($workingDays > 0) {
             $date = $date->sub(new \DateInterval('P1D'));
-            if (!$date instanceof \DateTimeInterface) {
-                throw new \RuntimeException('unable to perform subtraction');
+
+            if (!$date instanceof \DateTimeImmutable) {
+                throw new \RuntimeException('unable to perform date interval subtraction');
             }
 
             if (!$provider instanceof ProviderInterface) {
