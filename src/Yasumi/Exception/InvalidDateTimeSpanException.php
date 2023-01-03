@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Exception;
 
-use InvalidArgumentException;
-
-class InvalidDateTimeSpanException extends InvalidArgumentException implements Exception
+class InvalidDateTimeSpanException extends \InvalidArgumentException implements Exception
 {
 }

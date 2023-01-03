@@ -14,9 +14,7 @@ declare(strict_types=1);
 
 namespace Yasumi\Exception;
 
-use InvalidArgumentException;
-
-class InvalidDateException extends InvalidArgumentException implements Exception
+class InvalidDateException extends \InvalidArgumentException implements Exception
 {
     /**
      * @param mixed $argumentValue the value of the invalid argument

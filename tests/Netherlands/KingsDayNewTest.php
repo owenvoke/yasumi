@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\tests\Netherlands;
 
-use Exception;
 use Yasumi\Holiday;
 use Yasumi\Provider\Netherlands\Kingsday;
 use Yasumi\tests\HolidayTestCase;
@@ -27,7 +26,7 @@ class KingsDayNewTest extends NetherlandsBaseTestCase implements HolidayTestCase
     /**
      * Tests Kings Day on or after 2014. King's Day is celebrated from 2014 onwards on April 27th.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testKingsDayOnAfter2014(): void
     {
