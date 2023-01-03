@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Provider;
 
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Holiday;
 
@@ -35,7 +34,6 @@ class Portugal extends AbstractProvider
     /**
      * Initialize holidays for Portugal.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -83,7 +81,6 @@ class Portugal extends AbstractProvider
      *
      * @see https://en.wikipedia.org/wiki/Carnation_Revolution
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -105,7 +102,6 @@ class Portugal extends AbstractProvider
      * In Portugal, between 2013 andd 2015 (inclusive) this holiday did not happen due to government deliberation.
      * It was restored in 2016.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -130,7 +126,6 @@ class Portugal extends AbstractProvider
      *
      * @see https://en.wikipedia.org/wiki/Portugal_Day
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -164,7 +159,6 @@ class Portugal extends AbstractProvider
      *
      * @see https://en.wikipedia.org/wiki/5_October_1910_revolution
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -185,7 +179,6 @@ class Portugal extends AbstractProvider
      * In Portugal, between 2013 and 2015 (inclusive) this holiday did not happen due to government deliberation.
      * It was restored in 2016.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -219,7 +212,6 @@ class Portugal extends AbstractProvider
      * @see https://pt.wikipedia.org/wiki/Restauração_da_Independência (portuguese link)
      * @see https://pt.wikipedia.org/wiki/Guerra_da_Restauração (english link)
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception

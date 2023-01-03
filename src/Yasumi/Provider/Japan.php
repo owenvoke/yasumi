@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Provider;
 
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Holiday;
 use Yasumi\SubstituteHoliday;
@@ -71,7 +70,6 @@ class Japan extends AbstractProvider
     /**
      * Initialize holidays for Japan.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -267,7 +265,6 @@ class Japan extends AbstractProvider
      *
      * @see http://www.h3.dion.ne.jp/~sakatsu/holiday_topic.htm (in Japanese)
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -303,10 +300,8 @@ class Japan extends AbstractProvider
      * Coming of Age Day was established after 1948 on January 15th. After 2000 it was changed to be the second monday
      * of January.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
-     * @throws \Exception
      * @throws \Exception
      */
     private function calculateComingOfAgeDay(): void
@@ -333,10 +328,8 @@ class Japan extends AbstractProvider
      *
      * Greenery Day was established from 1989 on April 29th. After 2007 it was changed to be May 4th.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
-     * @throws \Exception
      * @throws \Exception
      */
     private function calculateGreeneryDay(): void
@@ -364,11 +357,8 @@ class Japan extends AbstractProvider
      * Marine Day was established since 1996 on July 20th. After 2003 it was changed to be the third monday of July.In
      * 2020 is July 23th.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
-     * @throws \Exception
-     * @throws \Exception
      * @throws \Exception
      */
     private function calculateMarineDay(): void
@@ -409,7 +399,6 @@ class Japan extends AbstractProvider
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
-     * @throws \Exception
      */
     private function calculateMountainDay(): void
     {
@@ -440,10 +429,8 @@ class Japan extends AbstractProvider
      * Respect for the Age Day was established since 1996 on September 15th. After 2003 it was changed to be the third
      * monday of September.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
-     * @throws \Exception
      * @throws \Exception
      */
     private function calculateRespectForTheAgeDay(): void
@@ -471,11 +458,8 @@ class Japan extends AbstractProvider
      * Health And Sports Day was established since 1966 on October 10th. After 2000 it was changed to be the second
      * monday of October.In 2020 is July 24th.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
-     * @throws \Exception
-     * @throws \Exception
      * @throws \Exception
      */
     private function calculateSportsDay(): void
@@ -517,7 +501,6 @@ class Japan extends AbstractProvider
      *
      * @see http://www.h3.dion.ne.jp/~sakatsu/holiday_topic.htm (in Japanese)
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -553,7 +536,6 @@ class Japan extends AbstractProvider
      * Generally if a national holiday falls on a Sunday, the holiday is observed the next working day (not being
      * another holiday).
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -565,6 +547,9 @@ class Japan extends AbstractProvider
 
         // Loop through all holidays
         foreach ($this->getHolidays() as $holiday) {
+            if (!$holiday instanceof Holiday) {
+                continue;
+            }
             $date = clone $holiday;
 
             // If holidays falls on a Sunday
@@ -637,7 +622,6 @@ class Japan extends AbstractProvider
      *
      * Any day that falls between two other national holidays also becomes a holiday, known as a bridge holiday.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -660,6 +644,10 @@ class Japan extends AbstractProvider
 
             // Determine if gap between holidays is one day and create bridge holiday
             if (2 === (int) $previous->diff($datesIterator->current())->format('%a')) {
+                if (!$previous instanceof Holiday) {
+                    throw new \RuntimeException('unable to determine the difference between dates');
+                }
+
                 $bridgeDate = clone $previous;
                 $bridgeDate->add(new \DateInterval('P1D'));
 

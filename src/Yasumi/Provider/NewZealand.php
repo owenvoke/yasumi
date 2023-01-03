@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Provider;
 
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Holiday;
 
@@ -35,7 +34,6 @@ class NewZealand extends AbstractProvider
     /**
      * Initialize holidays for New Zealand.
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -75,7 +73,6 @@ class NewZealand extends AbstractProvider
      * @see https://www.timeanddate.com/holidays/new-zealand/day-after-new-years-day
      * @see https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-falling-on-a-weekend/
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -115,7 +112,6 @@ class NewZealand extends AbstractProvider
      * @see https://en.wikipedia.org/wiki/Waitangi_Day
      * @see https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-falling-on-a-weekend/
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -145,7 +141,6 @@ class NewZealand extends AbstractProvider
      * @see https://en.wikipedia.org/wiki/Anzac_Day
      * @see https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-falling-on-a-weekend/
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -178,7 +173,6 @@ class NewZealand extends AbstractProvider
      *
      * @see https://www.timeanddate.com/holidays/new-zealand/queen-birthday
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -211,7 +205,6 @@ class NewZealand extends AbstractProvider
      *
      * @see https://www.timeanddate.com/holidays/new-zealand/labour-day
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception
@@ -240,7 +233,6 @@ class NewZealand extends AbstractProvider
      * @see https://www.timeanddate.com/holidays/new-zealand/christmas-day
      * @see https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-falling-on-a-weekend/
      *
-     * @throws InvalidDateException
      * @throws \InvalidArgumentException
      * @throws UnknownLocaleException
      * @throws \Exception

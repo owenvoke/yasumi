@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi;
 
-use Yasumi\Exception\InvalidDateException;
 use Yasumi\Exception\InvalidYearException;
 use Yasumi\Exception\ProviderNotFoundException;
 use Yasumi\Exception\UnknownLocaleException;
@@ -65,7 +64,6 @@ class Yasumi
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \Exception
-     * @throws InvalidDateException
      *
      * @TODO we should accept a timezone so we can accept int/string for $startDate
      */
@@ -81,9 +79,6 @@ class Yasumi
 
         while ($workingDays > 0) {
             $date = $date->add(new \DateInterval('P1D'));
-            if (!$date instanceof \DateTimeInterface) {
-                throw new \RuntimeException('unable to perform addition');
-            }
 
             if (!$provider instanceof ProviderInterface) {
                 $provider = self::create($class, (int) $date->format('Y'));
@@ -265,7 +260,6 @@ class Yasumi
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \Exception
-     * @throws InvalidDateException
      *
      * @TODO we should accept a timezone so we can accept int/string for $startDate
      */
@@ -274,15 +268,16 @@ class Yasumi
         \DateTimeInterface $startDate,
         int $workingDays = 1
     ): \DateTimeInterface {
-        // convert to immutable date to prevent modification of the  original
+        // convert to immutable date to prevent modification of the original
         $date = $startDate instanceof \DateTime ? \DateTimeImmutable::createFromMutable($startDate) : $startDate;
 
         $provider = null;
 
         while ($workingDays > 0) {
             $date = $date->sub(new \DateInterval('P1D'));
-            if (!$date instanceof \DateTimeInterface) {
-                throw new \RuntimeException('unable to perform subtraction');
+
+            if (!$date instanceof \DateTimeImmutable) {
+                throw new \RuntimeException('unable to perform date interval subtraction');
             }
 
             if (!$provider instanceof ProviderInterface) {

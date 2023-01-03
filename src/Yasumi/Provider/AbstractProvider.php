@@ -4,7 +4,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Yasumi package.
  *
- * Copyright (c) 2015 - 2022 AzuyaLabs
+ * Copyright (c) 2015 - 2023 AzuyaLabs
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Yasumi\Provider;
 
-use InvalidArgumentException;
 use Yasumi\Exception\UnknownLocaleException;
 use Yasumi\Filters\BetweenFilter;
 use Yasumi\Filters\OnFilter;
@@ -102,7 +101,7 @@ abstract class AbstractProvider implements \Countable, ProviderInterface, \Itera
     ) {
         $this->clearHolidays();
 
-        $this->year = $year ?: getdate()['year'];
+        $this->year = $year ?: (int) date('Y');
         $this->locale = $locale ?? 'en_US';
         $this->globalTranslations = $globalTranslations;
 
